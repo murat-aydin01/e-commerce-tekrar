@@ -1,8 +1,3 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+E-Ticaret Uygulaması Görevi
+Bu görev, şimdiye kadar işlediğimiz tüm konuları kapsayan kapsamlı bir React e-ticaret uygulaması geliştirmeyi içeriyor.
+✅ Redux Toolkit, React Router, Axios, Custom Hooks, LocalStorage, Form Yönetimi, useEffect, useMemo, useRef, Redux Thunk gibi tüm konuları bir arada kullanacağız.
