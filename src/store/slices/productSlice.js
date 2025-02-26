@@ -9,14 +9,28 @@ export const fetchProducts = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data || error.message || "Bilinmeyen bir hata oluştu"
+        error.response?.data || error.message || "Ürünler getirilirken bilinmeyen bir hata oluştu"
       );
     }
   }
 );
 
+export const fetchProductById = createAsyncThunk("products/fetchProductById", async (id, thunkAPI) => {
+  const product = thunkAPI.getState().products.products.find((product)=>product.id == id)
+  if(product) return product
+  try {
+    const response = await axios.get(`https://fakestoreapi.com/products/${id}`)
+    return response.data
+  } catch (error) {
+    return thunkAPI.rejectWithValue(
+      error.response?.data || error.message || "Ürün detayı getirilirken bilinmeyen bir hata oluştu."
+    )
+  }
+})
+
 const initialState = {
-  items: [],
+  products: [],
+  currentProduct: null,
   status: "idle",
   error: null,
 };
@@ -29,16 +43,39 @@ const productSlice = createSlice({
     builder
       .addCase(fetchProducts.pending, (state) => {
         state.status = "loading";
+        state.error = null;
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.items = action.payload;
+        state.products = action.payload;
       })
 
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
-      });
+      })
+
+      //id ile ürün getirme
+
+      .addCase(fetchProductById.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+
+      .addCase(fetchProductById.fulfilled, (state, action) => {
+        state.currentProduct = action.payload;
+        state.status = "succeeded"
+        const exists = state.products.some((product)=>product.id == action.payload.id)
+        if(!exists) {
+          state.products.push(action.payload)
+        }
+      })
+
+      .addCase(fetchProductById.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      
   },
 });
 
