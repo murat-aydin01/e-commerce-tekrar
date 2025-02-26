@@ -14,8 +14,15 @@ function Product() {
 
   if (status == "loading") return <p>yükleniyor</p>;
   if (error) return <p>bir hata oluştu: {error}</p>;
-  if (!currentProduct) return <p>Ürün bilgisi bulunamadı</p>;
-  return <div>{currentProduct.title}</div>;
+  return <div className="flex flex-col place-items-center gap-6">
+    <img src={currentProduct.image} className="max-h-72 aspect-auto"/>
+    <h1>{currentProduct.title}</h1>
+    <p>{currentProduct.description}</p>
+    <p>{currentProduct.price}</p>
+    <p>{currentProduct.category}</p>
+    
+
+  </div>;
 }
 
 export default Product;

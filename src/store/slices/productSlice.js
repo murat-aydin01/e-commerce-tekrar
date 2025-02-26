@@ -30,7 +30,7 @@ export const fetchProductById = createAsyncThunk("products/fetchProductById", as
 
 const initialState = {
   products: [],
-  currentProduct: null,
+  currentProduct: {},
   status: "idle",
   error: null,
 };
