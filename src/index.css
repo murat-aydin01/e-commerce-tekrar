@@ -4,11 +4,9 @@
   a.active {
     @apply font-bold
   }
+  
 }
 
 @layer utilities {
-  .grid-cols-auto-fit {
-    grid-template-columns: repeat(auto-fit, minmax(200px, max(1fr, 25%)));
-  }
+  
 }
-
