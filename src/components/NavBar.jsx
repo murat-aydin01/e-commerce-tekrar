@@ -5,6 +5,7 @@ function NavBar() {
     <header className="flex justify-center gap-6">
         <NavLink to={"/"}>Ana Sayfa</NavLink>
         <NavLink to={"/products"}>Ürünler</NavLink>
+        <NavLink to={"/cart"}>Sepet</NavLink>
     </header>
   )
 }

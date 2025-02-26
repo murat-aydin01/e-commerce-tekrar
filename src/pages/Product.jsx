@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { fetchProductById } from "../store/slices/productSlice";
+import { addToCart } from "../store/slices/cartSlice";
 
 function Product() {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ function Product() {
     <p>{currentProduct.description}</p>
     <p>{currentProduct.price}</p>
     <p>{currentProduct.category}</p>
+    <button onClick={()=>{dispatch(addToCart(currentProduct))}}>sepete ekle</button>
     
 
   </div>;
