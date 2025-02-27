@@ -4,6 +4,9 @@
   a.active {
     @apply font-bold
   }
+  button {
+    @apply cursor-pointer
+  }
   
 }
 
