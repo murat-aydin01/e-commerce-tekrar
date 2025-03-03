@@ -39,11 +39,49 @@ export const fetchProductById = createAsyncThunk(
   }
 );
 
+const getFilteredSortedProducts = (state) => {
+  const filtered =
+    state.selectedCategories.length > 0
+      ? state.products.filter((product) =>
+          state.selectedCategories.includes(product.category)
+        )
+      : state.products;
+
+  const filteredSorted = [...filtered];
+
+  switch (state.selectedSortOption) {
+    case "Fiyata göre artan":
+      filteredSorted.sort((a, b) => Number(a.price) - Number(b.price));
+      break;
+
+    case "Fiyata göre azalan":
+      filteredSorted.sort((a, b) => Number(b.price) - Number(a.price));
+      break;
+
+    case "Puana göre azalan":
+      filteredSorted.sort((a, b) => Number(b.rating.rate) - Number(a.rating.rate));
+      break;
+    default:
+      filtered;
+      break;
+  }
+
+  return filteredSorted;
+};
+
 const initialState = {
   products: [],
   currentProduct: {},
   categories: [],
   selectedCategories: [],
+  sortOptions: [
+    "Varsayılan",
+    "Fiyata göre artan",
+    "Fiyata göre azalan",
+    "Puana göre azalan",
+  ],
+  selectedSortOption: "Varsayılan",
+  filteredSortedProducts: [],
   status: "idle",
   error: null,
 };
@@ -60,6 +98,11 @@ const productSlice = createSlice({
       } else {
         state.selectedCategories.push(action.payload);
       }
+      state.filteredSortedProducts = getFilteredSortedProducts(state);
+    },
+    setSortOption: (state, action) => {
+      state.selectedSortOption = action.payload;
+      state.filteredSortedProducts = getFilteredSortedProducts(state);
     },
   },
   extraReducers: (builder) => {
@@ -76,6 +119,7 @@ const productSlice = createSlice({
             state.categories.push(product.category);
           }
         });
+        state.filteredSortedProducts = getFilteredSortedProducts(state);
       })
 
       .addCase(fetchProducts.rejected, (state, action) => {
