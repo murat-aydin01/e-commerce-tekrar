@@ -50,16 +50,18 @@ const getFilteredSortedProducts = (state) => {
   const filteredSorted = [...filtered];
 
   switch (state.selectedSortOption) {
-    case "Fiyata göre artan":
+    case "price_asc":
       filteredSorted.sort((a, b) => Number(a.price) - Number(b.price));
       break;
 
-    case "Fiyata göre azalan":
+    case "price_desc":
       filteredSorted.sort((a, b) => Number(b.price) - Number(a.price));
       break;
 
-    case "Puana göre azalan":
-      filteredSorted.sort((a, b) => Number(b.rating.rate) - Number(a.rating.rate));
+    case "rating":
+      filteredSorted.sort(
+        (a, b) => Number(b.rating.rate) - Number(a.rating.rate)
+      );
       break;
     default:
       filtered;
@@ -74,13 +76,13 @@ const initialState = {
   currentProduct: {},
   categories: [],
   selectedCategories: [],
-  sortOptions: [
-    "Varsayılan",
-    "Fiyata göre artan",
-    "Fiyata göre azalan",
-    "Puana göre azalan",
-  ],
-  selectedSortOption: "Varsayılan",
+  sortOptions: {
+    default: "Varsayılan",
+    price_asc: "Fiyata göre artan",
+    price_desc: "Fiyata göre azalan",
+    rating: "Puana göre",
+  },
+  selectedSortOption: "default",
   filteredSortedProducts: [],
   status: "idle",
   error: null,
@@ -153,4 +155,4 @@ const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
-export const { toggleCategory } = productSlice.actions;
+export const { toggleCategory, setSortOption } = productSlice.actions;

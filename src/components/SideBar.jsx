@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { toggleCategory } from "../store/slices/productSlice";
+import { setSortOption, toggleCategory } from "../store/slices/productSlice";
 
 function SideBar() {
-  const { categories, selectedCategories,  } = useSelector((state) => state.products);
+  const { categories, selectedCategories, sortOptions, selectedSortOption } = useSelector((state) => state.products);
   const dispatch = useDispatch();
   return (
     <div className="flex flex-col gap-6">
@@ -25,10 +25,9 @@ function SideBar() {
       </div>
       <div className="flex flex-col gap-2">
         <p className="font-bold">Sırala</p>
-        <label ><input type="radio" checked={false} value={"default"}/>Varsayılan</label>
-        <label ><input type="radio" checked={false} value={"price_asc"}/>Fiyata göre artan</label>
-        <label ><input type="radio" checked={false} value={"price_desc"}/>Fiyata göre azalan</label>
-        <label ><input type="radio" checked={false} value={"rating"}/>Puana göre</label>
+        {Object.entries(sortOptions).map(([key, value])=>{return (
+          <label key={key}><input type="radio" checked={key===selectedSortOption} value={key} onChange={()=>{dispatch(setSortOption(key))}}/>{value}</label>
+        )})}
       </div>
     </div>
   );
